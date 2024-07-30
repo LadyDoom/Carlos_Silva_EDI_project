@@ -1,11 +1,14 @@
+# importation des packages nécessaires
 import json
 import csv
 import requests
 import re
 from time import sleep
 
+# Requête pour obtenir toutes les références citées par C. Silva dans les 5 dernières années complètes
 w = requests.get("https://api.openalex.org/works?filter=author.id:https://openalex.org/A5100417531,publication_year:2019-2023&select=referenced_works&per-page=200")
 
+# on met ça en json
 refs = w.json()
 
 # Créer un fichier json pour les références :
@@ -24,8 +27,10 @@ count = 1
 rows = []
 for i in lst :
     print(count)
-    # on récupère les données d'OpenAlex
+    # on récupère les données d'OpenAlex pour chaque référence
     article = requests.get("https://api.openalex.org/works/" + i + "?select=id,title,authorships")
+
+    # On stocke ça en json dans une variable (si on peut)
     try:
         data = article.json()
     except :
@@ -34,6 +39,8 @@ for i in lst :
             data = json.loads(data)
         except :
             row = ["json error with work " + i, "error"]
+
+    # on extrait les données dont on a besoin et on les stocke dans notre liste "row"
     try :
         row = [data["id"], data["title"]]
     except :
@@ -55,9 +62,12 @@ for i in lst :
         row.append(data["authorships"][0]["raw_affiliation_strings"])
     except :
         row.append("error")
-    # attendre 1 sec pour ne pas dépasser la limite de 10 requêtes/sec
+
+    # attendre 1 sec pour ne pas dépasser la limite de 10 requêtes/sec imposée par OpenAlex
     if (count % 10)==0:
         sleep(1)
+
+    # On ajoute cette nouvelle ligne à notre liste de lignes et on idente le compteur
     rows.append(row)
     count = count+1
 
