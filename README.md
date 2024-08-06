@@ -11,7 +11,7 @@ Il génère un tableau dont chaque ligne correspond à une référence. Pour cha
 
 [CS_API_OA_with_source.py](https://github.com/LadyDoom/Carlos_Silva_EDI_project/blob/main/CS_API_OA_with_source.py) va chercher la liste des références des articles de Carlos Silva publiés entre 2019 et 2023 et va chercher les infos du premier auteur.
 Il génère un tableau dont chaque ligne correspond à une référence. Pour chaque référence, les colonnes indiquent :
-- ==l'id OpenAlex de l'article dans lequel elle est citée==
+- **l'id OpenAlex de l'article dans lequel elle est citée**
 - son id OpenAlex
 - son titre
 - le premier auteur
