@@ -23,6 +23,7 @@ for i in refs :
 
     for j in i['referenced_works'] :
         print(count)
+        # on met l'id de l'article source
         row = [i['id']]
         # on récupère les données d'OpenAlex pour chaque référence
         article = requests.get("https://api.openalex.org/works/" + j.replace("https://openalex.org/", "") + "?select=id,title,authorships")
